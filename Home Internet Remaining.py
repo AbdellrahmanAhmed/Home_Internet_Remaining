@@ -29,8 +29,11 @@ ws[f'C${cell}'].value = todayN
 ws[f'D${cell}'].value = time
 ws[f'E${cell}'].value = remaining
 
-currentCell = ws[f'E${cell}']
-currentCell.alignment = Alignment(horizontal='center')
+cellList = ['A', 'B', 'C', 'D', 'E']
+
+for cellC in cellList:
+    currentCell = ws[f'${cellC}${cell}']
+    currentCell.alignment = Alignment(horizontal='center')
 
 print('Last Remaining:  ', ws[f'E${cell - 1}'].value)
 
