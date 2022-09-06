@@ -96,18 +96,19 @@ def some_job():
         btTime = datetime.strptime(timeN, "%H:%M:%S") - bTime
 
         cT = []
-        tSTR = f"{today} 00:00:00"
+        tSTR = f"{today - timedelta(days=1)} 00:00:00"
+
 
         for c in range(1, 1000):
             if str(ws[f'A${c}'].value) == str(tSTR):
                 v = ws[f'E{c}'].value
                 cT.append(float(v))
-                break
             elif not ws[f'A{c}'].value:
-                cT.append(float(remaining))
-                break
+                if not cT:
+                    cT.append(float(remaining))
+                    break
 
-        totalDayUsed = float(cT[0]) - float(remaining)
+        totalDayUsed = float(cT[-1]) - float(remaining)
 
         msg = f'''
         Remaining {remaining} GB 
