@@ -13,11 +13,6 @@ from selenium.webdriver.common.by import By
 from winotify import Notification
 from colorama import Fore
 
-
-os.chdir("C:/Users/Abdel/Desktop/Home Internet Remaining")
-
-ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 6)
-
 def some_job():
     global msg
     try:
