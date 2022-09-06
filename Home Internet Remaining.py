@@ -224,15 +224,15 @@ def some_job():
         bTime = datetime.strptime(tt, "%H:%M:%S")
         btTime = datetime.strptime(timeN, "%H:%M:%S") - bTime
 
-        cT = []
-        tSTR = f"{today} 00:00:00"
-        for c in range(1, 1000):
-            if str(ws[f'A${c}'].value) == str(tSTR):
-                v = ws[f'E{c}'].value
-                cT.append(float(v))
-            elif not ws[f'A{c}'].value:
-                cT.append(0.0)
-                break
+        try:
+            for c in range(1, 1000):
+                if str(ws[f'A${c}'].value) == str(tSTR):
+                    v = ws[f'E{c}'].value
+                    cT.append(float(v))
+                elif not ws[f'A{c}'].value:
+                    break
+        except:
+            cT = [0.00,0.00]
         totalDayUsed = float(cT[0]) - float(cT[-1])
 
         msg = f'''
