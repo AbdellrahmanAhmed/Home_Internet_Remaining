@@ -150,9 +150,9 @@ def some_job():
         todayN = today.strftime("%A")
 
         def writeCell(cell0):
-            ws[f'C${cell0}'].value = todayN
-            ws[f'B${cell0}'].value = month
             ws[f'A${cell0}'].value = today
+            ws[f'B${cell0}'].value = month
+            ws[f'C${cell0}'].value = todayN
             ws[f'D${cell0}'].value = timeN
             ws[f'E${cell0}'].value = remaining
 
@@ -183,7 +183,8 @@ def some_job():
 
         # time.sleep(5)
 
-        old_Remaining = driver.find_element(by=By.XPATH, value='//*[@id="pr_id_7"]/div/div/div/div/div/app-gauge/div[2]/span[1]').text
+        old_Remaining = driver.find_element(by=By.XPATH,
+                                            value='//*[@id="pr_id_7"]/div/div/div/div/div/app-gauge/div[2]/span[1]').text
 
         # print(remaining0)
         remaining = ""
@@ -214,6 +215,8 @@ def some_job():
         # print(f'Last Used {round(used, 2)} GB')
 
         last_Remaining = ws[f'E${cell - 1}'].value
+        remaining_days = date(2022, 9, 18) - today
+        recommended_Remaining = round(float(remaining) / float(remaining_days.days), 2)
 
         tt = str(ws[f'D${cell - 1}'].value)
         after_hour_date_time = datetime.now() + timedelta(hours=1)
@@ -221,9 +224,21 @@ def some_job():
         bTime = datetime.strptime(tt, "%H:%M:%S")
         btTime = datetime.strptime(timeN, "%H:%M:%S") - bTime
 
+        cT = []
+        tSTR = f"{today} 00:00:00"
+        for c in range(1, 1000):
+            if str(ws[f'A${c}'].value) == str(tSTR):
+                v = ws[f'E{c}'].value
+                cT.append(float(v))
+            elif not ws[f'A{c}'].value:
+                cT.append(0.0)
+                break
+        totalDayUsed = float(cT[0]) - float(cT[-1])
+
         msg = f'''
-        Remaining {remaining} GB Last Remaining: {last_Remaining} 
-        Used {used} GB  Duration  {btTime}
+        Remaining {remaining} GB 
+        recommended consumption  {recommended_Remaining} GB 
+        and Total Day Remaining {round(totalDayUsed, 2)}GB
         '''
         print(msg)
 
