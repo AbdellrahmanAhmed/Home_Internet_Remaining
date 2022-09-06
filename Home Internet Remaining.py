@@ -102,10 +102,12 @@ def some_job():
             if str(ws[f'A${c}'].value) == str(tSTR):
                 v = ws[f'E{c}'].value
                 cT.append(float(v))
+                break
             elif not ws[f'A{c}'].value:
-                pass
+                cT.append(float(remaining))
+                break
 
-        totalDayUsed = float(cT[0]) - float(cT[-1])
+        totalDayUsed = float(cT[0]) - float(remaining)
 
         msg = f'''
         Remaining {remaining} GB 
