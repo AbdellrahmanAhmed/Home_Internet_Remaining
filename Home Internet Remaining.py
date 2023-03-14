@@ -54,8 +54,8 @@ def some_job():
         password = driver.find_element(by=By.XPATH, value='//*[@id="login-password-et"]')
         p_Button_Label = driver.find_element(by=By.XPATH, value='//*[@id="login-login-btn"]/span[2]')
 
-        service_Number.send_keys('0663696485')
-        password.send_keys('01552337484we')
+        service_Number.send_keys(' ')
+        password.send_keys(' ')
         p_Button_Label.click()
 
         driver.implicitly_wait(5)
